@@ -1,0 +1,61 @@
+.parent {
+    display: block;
+    width: 90%;
+    height: 800px;
+    border: 1px solid black;
+
+}
+
+.child {
+    margin-left: 20px;
+    width: 80%;
+    height: 600px;
+    border: 1px solid black;
+
+}
+
+#price {
+    border: 1px solid black;
+    width: 200px;
+    height: 100px;
+    margin-bottom: 20px;
+    
+}
+
+#time {
+    border: 1px solid black;
+    width: 200px;
+    height: 100px;
+    margin-top: 10px;
+}
+
+#weight {
+    width: 150px;
+    height: 30px;
+    
+}
+
+#distance {
+    width: 150px;
+    height: 30px;
+    
+}
+
+#end-button {
+    width: 150px;
+    height: 30px;
+    margin: 0 auto;
+}
+
+.calculate-container {
+    margin-left: 30%;
+   
+
+}
+.col{
+    width: calc(50% - 22px);
+    float: left;
+    padding-left: 20px;
+    padding-top: 20px;
+    margin-bottom: 80px;
+}

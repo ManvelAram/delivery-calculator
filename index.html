@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 16, 17 Home work </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="parent">
+        <h1>Delivery</h1>
+        <div class="child">
+            <form action="" onsubmit="calculate(event); event.preventDefault()">
+                <div class="col">
+                    <span>Weight</span>
+                    <div>
+                        <input type="number" value="" id="weight">
+                    </div>
+                    <div>
+                        <span>Distance</span>
+                        <div>
+                            <input type="number" value="" id="distance">
+                        </div>
+                    </div>
+                    <div>
+                        <input type="radio" name="delivery-company">
+                        <span>In Post</span><br>
+                        <input type="radio" name="delivery-company">
+                        <span>HayPost</span><br>
+                        <input type="radio" name="delivery-company">
+                        <span>DHL</span><br>
+                        <input type="radio" name="delivery-company">
+                        <span>FeDEX</span><br>
+                        <input type="radio" name="delivery-company">
+                        <span>Pochta Polska</span> 
+                    </div>
+    
+                </div>
+                <div class="col">
+                    <div id="price">Total Price <span id="total-price"></span></div>
+                    <div id="time"> Total Time</div> 
+                </div>
+               
+                <div class="calculate-container">
+                    <input type="submit" value="Calculate" id="end-button">
+                </div>
+                   
+            </form>
+           
+        </div>
+    </div>
+    
+
+    <script type="text/javascript" src="script.js"></script>
+</body>
+</html>
