@@ -11,7 +11,6 @@ jamanak - ete minjev 100 kg mi or, 100 barcr 2 0r, minchev 1000 km 3 or, 1000 km
  jamanak - ete minjev 20 kg mi or, 20 -200 kg 2 0r, 200 kg avel amen 100 kg + mior, minchev 1000 km 1 or, 1000 km ic avel amen 1000 km + 1 or, minimum 5 or;
 */
 
-
 let couriers = ['inpst', 'hypst', 'dhl', 'fdx', 'plskpst'];
 function calculate(event) {
   const weight = event.target[0].value;
@@ -22,64 +21,65 @@ function calculate(event) {
   for (let i = 2; i <= 6; i++){
     if (event.target[i].checked) {
       courier = couriers[i-2];
-      break
+      break;
     }
   }
   let priceTotal = 0;
   let timeTotal = 0;
-  if (courier === 'inpst'){  
-    if (weight <= 10){
-      timeTotal = 1;
-    } else if (weight > 10 && weight <= 100) {
-      timeTotal = 2;
-    } else if (weight > 100){
-      standartWeight = 100;
-      overWeight = weight - standartWeight
-      timeTotal = 2 + Math.ceil(overWeight / standartWeight);
-    }
-    timeTotal += 3;
-    if (distance > 1000) {
-      let standartDistance = 1000;
-      let overDistance = distance - standartDistance;
-      timeTotal += Math.ceil(overDistance / 100); 
-    } 
-      
-    if (weight <= 10){
-      priceTotal = (weight * 1) + (distance * 0.2);
-    } else if (weight > 10){
-      let standartPrice = 1;
-      let overPrice = weight - 10;
-      priceTotal = (standartPrice * 1) + (overPrice * 0.5) + (distance * 0.2);
-      
-    }
-  }
-  
-  if (courier === 'hypst'){
-    if (weight <= 100) {
-      timeTotal = 1;
-      } else if (weight > 100 ) {
+
+  switch (courier) {
+    case 'inpst':
+      if (weight <= 10){
+        timeTotal = 1;
+      } else if (weight > 10 && weight <= 100) {
         timeTotal = 2;
+      } else if (weight > 100){
+        standartWeight = 100;
+        overWeight = weight - standartWeight
+        timeTotal = 2 + Math.ceil(overWeight / standartWeight);
+      }
+      timeTotal += 3;
+      if (distance > 1000) {
+        let standartDistance = 1000;
+        let overDistance = distance - standartDistance;
+        timeTotal += Math.ceil(overDistance / 100); 
       } 
-
-    timeTotal += 3;
-    if (distance > 1000) {
-      let standartDistance = 1000;
-      let overDistance = distance - standartDistance;
-      timeTotal += Math.ceil(overDistance / 100);
-    } 
         
-    if (distance <=100) {
-      priceTotal = (distance * 0.2) + (weight * 0.8);
-    } else if (distance > 100) {
-      let standartDistance = 100 * 0.2;
-      let overDistance = distance - 100;
-      priceTotal = standartDistance + (overDistance * 0.1) + (weight * 0.8);
-      
-    }
-  }
+      if (weight <= 10){
+        priceTotal = (weight * 1) + (distance * 0.2);
+      } else if (weight > 10){
+        let standartPrice = 1;
+        let overPrice = weight - 10;
+        priceTotal = (standartPrice * 1) + (overPrice * 0.5) + (distance * 0.2);
+        
+      }
+      break;
 
-  if (courier === 'dhl') {
-    if (weight <= 10) {
+    case 'hypst':
+      if (weight <= 100) {
+        timeTotal = 1;
+        } else if (weight > 100 ) {
+          timeTotal = 2;
+        } 
+  
+      timeTotal += 3;
+      if (distance > 1000) {
+        let standartDistance = 1000;
+        let overDistance = distance - standartDistance;
+        timeTotal += Math.ceil(overDistance / 100);
+      } 
+          
+      if (distance <=100) {
+        priceTotal = (distance * 0.2) + (weight * 0.8);
+      } else if (distance > 100) {
+        let standartDistance = 100 * 0.2;
+        let overDistance = distance - 100;
+        priceTotal = standartDistance + (overDistance * 0.1) + (weight * 0.8);
+      }
+      break; 
+
+    case 'dhl':
+      if (weight <= 10) {
         timeTotal = 1;
       } else if (weight > 10 && weight <= 100) {
         timeTotal = 2;
@@ -103,73 +103,76 @@ function calculate(event) {
         let overDistance = distance - 100;
         priceTotal = standartDistance + (overDistance * 0.5) + (weight * 1.8);
       }
-  }
+      break;  
 
-  if (courier === 'fdx') {
-    if (weight <= 50){
-      timeTotal = 1;
-    } else if (weight <= 500){
-      timeTotal = 2;
-    } else if (weight > 500){
-      standartWeight = 500;
-      overWeight = weight - standartWeight;
-      let pointWeight = 100
-      timeTotal = 2 + Math.ceil(overWeight / pointWeight); 
-    }
-    
-    timeTotal += 3;
-    if (distance > 1000){
-      let standartDistance = 1000;
-      let overDistance = distance - standartDistance;
-      timeTotal += Math.ceil(overDistance / 100);
-    }
-    
-    if (weight <= 30 || distance <= 100) {
-      priceTotal = 20 + (distance * 0.2);
-    } else if (weight > 30 || distance > 100) {
-      let standartWeight = 20;
-      let overWeight = (weight - 30) * 5;
-      let standartDistance = 20;
-      let overDistance = (distance - 100) * 0.1;
-      priceTotal = standartWeight + overWeight + standartDistance + overDistance;
-    }
-    
-  }
-
-  if (courier === 'plskpst') {
-    if (weight <= 20){
-      timeTotal = 1;
-    } else {
-      timeTotal = 2;
-      if (weight > 200) {
-        standartWeight = 200;
+    case 'fdx':
+      if (weight <= 50){
+        timeTotal = 1;
+      } else if (weight <= 500){
+        timeTotal = 2;
+      } else if (weight > 500){
+        standartWeight = 500;
         overWeight = weight - standartWeight;
-        pointWeight = 100;
-        timeTotal += Math.ceil(overWeight / pointWeight);
+        let pointWeight = 100
+        timeTotal = 2 + Math.ceil(overWeight / pointWeight); 
       }
-    }
-    timeTotal += 1;
-    if (distance > 1000){
-      standartDistance = 1000;
-      overDistance = distance - standartDistance;
-      timeTotal += Math.ceil(overDistance / standartDistance);
-    }
-    if (timeTotal < 5) {
-      timeTotal = 5;
-    }
+      
+      timeTotal += 3;
+      if (distance > 1000){
+        let standartDistance = 1000;
+        let overDistance = distance - standartDistance;
+        timeTotal += Math.ceil(overDistance / 100);
+      }
+      
+      if (weight <= 30 || distance <= 100) {
+        priceTotal = 20 + (distance * 0.2);
+      } else if (weight > 30 || distance > 100) {
+        let standartWeight = 20;
+        let overWeight = (weight - 30) * 5;
+        let standartDistance = 20;
+        let overDistance = (distance - 100) * 0.1;
+        priceTotal = standartWeight + overWeight + standartDistance + overDistance;
+      }
+      break; 
 
-    if (distance <= 100 ) {
-      priceTotal = (weight * 0.8) + (distance * 0.2);
-    } else if (distance > 100) {
-      let standartDistance = 20;
-      let overDistance = (distance - 100) * 0.1;
-      priceTotal = (weight * 0.8) + standartDistance + overDistance;
+    case 'plskpst':
+      if (weight <= 20){
+        timeTotal = 1;
+      } else {
+        timeTotal = 2;
+        if (weight > 200) {
+          standartWeight = 200;
+          overWeight = weight - standartWeight;
+          pointWeight = 100;
+          timeTotal += Math.ceil(overWeight / pointWeight);
+        }
+      }
+      timeTotal += 1;
+      if (distance > 1000){
+        standartDistance = 1000;
+        overDistance = distance - standartDistance;
+        timeTotal += Math.ceil(overDistance / standartDistance);
+      }
+      if (timeTotal < 5) {
+        timeTotal = 5;
+      }
+  
+      if (distance <= 100 ) {
+        priceTotal = (weight * 0.8) + (distance * 0.2);
+      } else if (distance > 100) {
+        let standartDistance = 20;
+        let overDistance = (distance - 100) * 0.1;
+        priceTotal = (weight * 0.8) + standartDistance + overDistance;
+      }
+      if (priceTotal < 50) {
+        priceTotal = 50;
+      } 
+    
+      break;       
+  
     }
-    if (priceTotal < 50) {
-      priceTotal = 50;
-    } 
+    price.innerHTML = priceTotal;
+    time.innerHTML = timeTotal;
+    console.log(weight, distance, courier, price, time);
   }
-  price.innerHTML = priceTotal;
-  time.innerHTML = timeTotal;
-  console.log(weight, distance, courier, price, time);
-}
+
