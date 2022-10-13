@@ -24,155 +24,182 @@ function calculate(event) {
       break;
     }
   }
-  let priceTotal = 0;
-  let timeTotal = 0;
-
-  switch (courier) {
-    case 'inpst':
-      if (weight <= 10){
-        timeTotal = 1;
-      } else if (weight > 10 && weight <= 100) {
-        timeTotal = 2;
-      } else if (weight > 100){
-        standartWeight = 100;
-        overWeight = weight - standartWeight
-        timeTotal = 2 + Math.ceil(overWeight / standartWeight);
-      }
-      timeTotal += 3;
-      if (distance > 1000) {
-        let standartDistance = 1000;
-        let overDistance = distance - standartDistance;
-        timeTotal += Math.ceil(overDistance / 100); 
-      } 
-        
-      if (weight <= 10){
-        priceTotal = (weight * 1) + (distance * 0.2);
-      } else if (weight > 10){
-        let standartPrice = 1;
-        let overPrice = weight - 10;
-        priceTotal = (standartPrice * 1) + (overPrice * 0.5) + (distance * 0.2);
-        
-      }
-      break;
-
-    case 'hypst':
-      if (weight <= 100) {
-        timeTotal = 1;
-        } else if (weight > 100 ) {
-          timeTotal = 2;
-        } 
   
-      timeTotal += 3;
-      if (distance > 1000) {
-        let standartDistance = 1000;
-        let overDistance = distance - standartDistance;
-        timeTotal += Math.ceil(overDistance / 100);
-      } 
+  const courierCalculations = {
+    inpst:{
+      calculatePrice: function(weight, distance){
+        let priceTotal = 0;
+        if (weight <= 10){
+          priceTotal = (weight * 1) + (distance * 0.2);
+        } else if (weight > 10){
+          let standartPrice = 1;
+          let overPrice = weight - 10;
+          priceTotal = (standartPrice * 1) + (overPrice * 0.5) + (distance * 0.2);
           
-      if (distance <=100) {
-        priceTotal = (distance * 0.2) + (weight * 0.8);
-      } else if (distance > 100) {
-        let standartDistance = 100 * 0.2;
-        let overDistance = distance - 100;
-        priceTotal = standartDistance + (overDistance * 0.1) + (weight * 0.8);
-      }
-      break; 
-
-    case 'dhl':
-      if (weight <= 10) {
-        timeTotal = 1;
-      } else if (weight > 10 && weight <= 100) {
-        timeTotal = 2;
-      } else if (weight > 100) {
-        let standartWeight = 100;
-        let overWeight = weight - standartWeight;
-        timeTotal = 2 + Math.ceil(overWeight/standartWeight);
-      }
-      
-    timeTotal += 2;
-    if (distance > 500) {
-        let pointDistance = 500
-        let overDistance = distance - pointDistance;
-        timeTotal += Math.ceil(overDistance / pointDistance);
-      }
-
-    if (distance <=100) {
-        priceTotal = weight * 1.8;
-      } else if (distance > 100) {
-        let standartDistance = 0;
-        let overDistance = distance - 100;
-        priceTotal = standartDistance + (overDistance * 0.5) + (weight * 1.8);
-      }
-      break;  
-
-    case 'fdx':
-      if (weight <= 50){
-        timeTotal = 1;
-      } else if (weight <= 500){
-        timeTotal = 2;
-      } else if (weight > 500){
-        standartWeight = 500;
-        overWeight = weight - standartWeight;
-        let pointWeight = 100
-        timeTotal = 2 + Math.ceil(overWeight / pointWeight); 
-      }
-      
-      timeTotal += 3;
-      if (distance > 1000){
-        let standartDistance = 1000;
-        let overDistance = distance - standartDistance;
-        timeTotal += Math.ceil(overDistance / 100);
-      }
-      
-      if (weight <= 30 || distance <= 100) {
-        priceTotal = 20 + (distance * 0.2);
-      } else if (weight > 30 || distance > 100) {
-        let standartWeight = 20;
-        let overWeight = (weight - 30) * 5;
-        let standartDistance = 20;
-        let overDistance = (distance - 100) * 0.1;
-        priceTotal = standartWeight + overWeight + standartDistance + overDistance;
-      }
-      break; 
-
-    case 'plskpst':
-      if (weight <= 20){
-        timeTotal = 1;
-      } else {
-        timeTotal = 2;
-        if (weight > 200) {
-          standartWeight = 200;
-          overWeight = weight - standartWeight;
-          pointWeight = 100;
-          timeTotal += Math.ceil(overWeight / pointWeight);
         }
+        return priceTotal;
+      },
+      calculateTime: function(weight, distance){
+        let timeTotal = 0;
+        if (weight <= 10){
+          timeTotal = 1;
+        } else if (weight > 10 && weight <= 100) {
+          timeTotal = 2;
+        } else if (weight > 100){
+          standartWeight = 100;
+          overWeight = weight - standartWeight
+          timeTotal = 2 + Math.ceil(overWeight / standartWeight);
+        }
+        timeTotal += 3;
+        if (distance > 1000) {
+          let standartDistance = 1000;
+          let overDistance = distance - standartDistance;
+          timeTotal += Math.ceil(overDistance / 100); 
+        } 
+        return timeTotal;
       }
-      timeTotal += 1;
-      if (distance > 1000){
-        standartDistance = 1000;
-        overDistance = distance - standartDistance;
-        timeTotal += Math.ceil(overDistance / standartDistance);
-      }
-      if (timeTotal < 5) {
-        timeTotal = 5;
-      }
-  
-      if (distance <= 100 ) {
-        priceTotal = (weight * 0.8) + (distance * 0.2);
-      } else if (distance > 100) {
-        let standartDistance = 20;
-        let overDistance = (distance - 100) * 0.1;
-        priceTotal = (weight * 0.8) + standartDistance + overDistance;
-      }
-      if (priceTotal < 50) {
-        priceTotal = 50;
-      } 
+    },
+    hypst:{
+      calculatePrice: function(weight, distance){
+        let priceTotal = 0;
+        if (distance <=100) {
+          priceTotal = (distance * 0.2) + (weight * 0.8);
+        } else if (distance > 100) {
+          let standartDistance = 100 * 0.2;
+          let overDistance = distance - 100;
+          priceTotal = standartDistance + (overDistance * 0.1) + (weight * 0.8);
+        }
+        return priceTotal;
+      },
+      calculateTime: function(weight,distance){
+        let timeTotal = 0;
+        if (weight <= 100) {
+          timeTotal = 1;
+          } else if (weight > 100 ) {
+            timeTotal = 2;
+          } 
     
-      break;       
-  
-    }
-    price.innerHTML = priceTotal;
-    time.innerHTML = timeTotal;
-    console.log(weight, distance, courier, price, time);
+        timeTotal += 3;
+        if (distance > 1000) {
+          let standartDistance = 1000;
+          let overDistance = distance - standartDistance;
+          timeTotal += Math.ceil(overDistance / 100);
+        } 
+        return timeTotal;
+      }
+    },
+    dhl:{
+      calculatePrice: function(weight, distance){
+        let priceTotal = 0;
+        if (distance <=100) {
+          priceTotal = weight * 1.8;
+        } else if (distance > 100) {
+          let standartDistance = 0;
+          let overDistance = distance - 100;
+          priceTotal = standartDistance + (overDistance * 0.5) + (weight * 1.8);
+        }
+        return priceTotal
+      },
+      calculateTime: function(weight, distance){
+        let timeTotal = 0;
+        if (weight <= 10) {
+          timeTotal = 1;
+        } else if (weight > 10 && weight <= 100) {
+          timeTotal = 2;
+        } else if (weight > 100) {
+          let standartWeight = 100;
+          let overWeight = weight - standartWeight;
+          timeTotal = 2 + Math.ceil(overWeight/standartWeight);
+        }
+        
+      timeTotal += 2;
+      if (distance > 500) {
+          let pointDistance = 500
+          let overDistance = distance - pointDistance;
+          timeTotal += Math.ceil(overDistance / pointDistance);
+        }
+        return timeTotal;
+      }
+    },
+    fdx:{
+      calculatePrice: function(weight, distance){
+        let priceTotal = 0;
+        if (weight <= 30 || distance <= 100) {
+          priceTotal = 20 + (distance * 0.2);
+        } else if (weight > 30 || distance > 100) {
+          let standartWeight = 20;
+          let overWeight = (weight - 30) * 5;
+          let standartDistance = 20;
+          let overDistance = (distance - 100) * 0.1;
+          priceTotal = standartWeight + overWeight + standartDistance + overDistance;
+        }
+        return priceTotal;
+      },
+      calculateTime: function(weight, distance){
+        let timeTotal = 0;
+        if (weight <= 50){
+          timeTotal = 1;
+        } else if (weight <= 500){
+          timeTotal = 2;
+        } else if (weight > 500){
+          standartWeight = 500;
+          overWeight = weight - standartWeight;
+          let pointWeight = 100
+          timeTotal = 2 + Math.ceil(overWeight / pointWeight); 
+        }
+        
+        timeTotal += 3;
+        if (distance > 1000){
+          let standartDistance = 1000;
+          let overDistance = distance - standartDistance;
+          timeTotal += Math.ceil(overDistance / 100);
+        }
+        return timeTotal;
+      }
+    },
+    plskpst:{
+      calculatePrice: function(weight, distance){
+        let priceTotal = 0;
+        if (distance <= 100 ) {
+          priceTotal = (weight * 0.8) + (distance * 0.2);
+        } else if (distance > 100) {
+          let standartDistance = 20;
+          let overDistance = (distance - 100) * 0.1;
+          priceTotal = (weight * 0.8) + standartDistance + overDistance;
+        }
+        if (priceTotal < 50) {
+          priceTotal = 50;
+        } 
+        return priceTotal;
+      },
+      calculateTime: function(weight, distance){
+        let timeTotal = 0;
+        if (weight <= 20){
+          timeTotal = 1;
+        } else {
+          timeTotal = 2;
+          if (weight > 200) {
+            standartWeight = 200;
+            overWeight = weight - standartWeight;
+            pointWeight = 100;
+            timeTotal += Math.ceil(overWeight / pointWeight);
+          }
+        }
+        timeTotal += 1;
+        if (distance > 1000){
+          standartDistance = 1000;
+          let overDistance = distance - standartDistance;
+          timeTotal += Math.ceil(overDistance / standartDistance);
+        }
+        if (timeTotal < 5) {
+          timeTotal = 5;
+        }
+        return timeTotal;
+      }
+    },
   }
+  price.innerHTML = courierCalculations[courier].calculatePrice(weight, distance);;
+  time.innerHTML = courierCalculations[courier].calculateTime(weight,distance);;
+  console.log(weight, distance, courier, price, time);
+}
 
